@@ -10,7 +10,7 @@ Given a CELEX ID (e.g. `32024R1689` for the EU AI Act), it fetches the document 
 - Document title and article count
 - In-memory cache so repeat lookups are instant
 
-A browser-based frontend (`frontend.html`) lets you paste EUR-Lex links directly and preview/download the result.
+A browser-based frontend (`public/index.html`) lets you paste EUR-Lex links directly and preview/download the result.
 
 ## Setup
 
@@ -28,7 +28,7 @@ pip install -r requirements.txt
 .venv/bin/uvicorn main:app --reload --port 8001
 ```
 
-Then open `frontend.html` in your browser (just double-click the file).
+Then open `public/index.html` in your browser (just double-click the file).
 
 ## API
 
@@ -68,8 +68,10 @@ curl http://localhost:8001/generate/32024R1689
 main.py           FastAPI app, rate limiting, two routes
 converter.py      DataFrame → Markdown conversion
 cache.py          Thread-safe in-memory cache
-frontend.html     EUR-Lex-styled browser UI
+api/index.py      Vercel serverless entry point
+public/index.html EUR-Lex-styled browser UI
 vendor/eurlex/    Vendored eurlex package (see below)
+vercel.json       Vercel routing config
 ```
 
 ## Credits
