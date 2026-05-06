@@ -1,6 +1,6 @@
 fastapi
 uvicorn[standard]
-slowapi
+upstash-redis
 pandas~=3.0.1
 rdflib~=7.6.0
 defusedxml~=0.7.1
