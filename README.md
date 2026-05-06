@@ -14,16 +14,13 @@ A browser-based frontend (`frontend.html`) lets you paste EUR-Lex links directly
 
 ## Setup
 
-Requires Python 3.12+ and the upstream `eurlex` package from a sibling directory.
+Requires Python 3.12+.
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-pip install -e ../eurlexmd2
 ```
-
-> The `eurlex` package is not on PyPI — clone `eurlexmd2` alongside this repo.
 
 ## Running
 
@@ -68,8 +65,13 @@ curl http://localhost:8001/generate/32024R1689
 ## Project structure
 
 ```
-main.py        FastAPI app, rate limiting, two routes
-converter.py   DataFrame → Markdown conversion
-cache.py       Thread-safe in-memory cache
-frontend.html  EUR-Lex-styled browser UI
+main.py           FastAPI app, rate limiting, two routes
+converter.py      DataFrame → Markdown conversion
+cache.py          Thread-safe in-memory cache
+frontend.html     EUR-Lex-styled browser UI
+vendor/eurlex/    Vendored eurlex package (see below)
 ```
+
+## Credits
+
+EUR-Lex fetching and HTML parsing are handled by the [eurlex](https://github.com/kevin91nl/eurlex) library by [K.M.J. Jacobs](https://github.com/kevin91nl), vendored here under its [MIT license](vendor/eurlex/LICENSE).

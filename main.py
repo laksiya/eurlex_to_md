@@ -9,10 +9,11 @@ from slowapi.util import get_remote_address
 from cache import cache
 from converter import dataframe_to_markdown
 
-try:
-    from eurlex import get_html_by_celex_id, parse_html
-except ImportError as e:
-    raise RuntimeError("eurlex package not installed — run: pip install -e ../eurlexmd2") from e
+import sys as _sys
+import os as _os
+_sys.path.insert(0, _os.path.join(_os.path.dirname(__file__), "vendor"))
+
+from eurlex import get_html_by_celex_id, parse_html
 
 limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(title="eurlex-to-md", description="Convert EUR-Lex CELEX IDs to Markdown")
