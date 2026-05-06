@@ -1,3 +1,7 @@
+import sys as _sys
+import os as _os
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "vendor"))
+
 import requests as _requests
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,11 +12,6 @@ from slowapi.util import get_remote_address
 
 from cache import cache
 from converter import dataframe_to_markdown
-
-import sys as _sys
-import os as _os
-_sys.path.insert(0, _os.path.join(_os.path.dirname(__file__), "vendor"))
-
 from eurlex import get_html_by_celex_id, parse_html
 
 limiter = Limiter(key_func=get_remote_address)
