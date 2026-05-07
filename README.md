@@ -22,13 +22,22 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Running
+## Running locally
 
 ```bash
 .venv/bin/uvicorn main:app --reload --port 8001
 ```
 
-Then open `public/index.html` in your browser (just double-click the file).
+Then open `public/index.html` in your browser (double-click the file — it auto-detects `file:` protocol and hits `localhost:8001`).
+
+## Deploy to Vercel
+
+```bash
+npm i -g vercel
+vercel
+```
+
+`api/index.py` is the serverless entry point; `vercel.json` rewrites `/generate/*` and `/health` to it. The frontend at `public/index.html` is served as a static file and uses relative API URLs when not opened locally.
 
 ## API
 
