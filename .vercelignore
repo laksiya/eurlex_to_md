@@ -1,3 +1,11 @@
 .venv/
 **/__pycache__/
 *.pyc
+main.py
+cache.py
+converter.py
+vendor/
+requirements.txt
+Procfile
+docs/
+TASKS.md

@@ -1,7 +1,1 @@
-{
-  "outputDirectory": "public",
-  "rewrites": [
-    { "source": "/generate/:path*", "destination": "/api/index" },
-    { "source": "/health",          "destination": "/api/index" }
-  ]
-}
+{ "outputDirectory": "public" }
