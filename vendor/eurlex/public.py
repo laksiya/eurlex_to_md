@@ -8,12 +8,10 @@ from __future__ import annotations
 
 # ruff: noqa: F401
 import pandas as pd
-import rdflib
 import requests
 from defusedxml import (
     ElementTree as ETree,  # nosec B405 - defusedxml hardens XML parsing
 )
-from SPARQLWrapper import JSON, SPARQLWrapper
 
 from eurlex.celex import get_celex_id, get_possible_celex_ids
 from eurlex.constants import ISO2_TO_ISO3, ISO3_TO_ISO2, PREFIXES
@@ -42,24 +40,12 @@ from eurlex.parser import (
     parse_span,
     process_paragraphs,
 )
-from eurlex.sparql import (
-    convert_sparql_output_to_dataframe,
-    get_celex_dataframe,
-    get_documents,
-    get_regulations,
-    guess_celex_ids_via_eurlex,
-    prepend_prefixes,
-    run_query,
-)
 from eurlex.uri import _add_query_param, get_prefixes, simplify_iri
 
 __all__ = [
     "pd",
-    "rdflib",
     "requests",
     "ETree",
-    "JSON",
-    "SPARQLWrapper",
     "get_celex_id",
     "get_possible_celex_ids",
     "PREFIXES",
@@ -85,13 +71,6 @@ __all__ = [
     "parse_modifiers",
     "parse_span",
     "process_paragraphs",
-    "convert_sparql_output_to_dataframe",
-    "guess_celex_ids_via_eurlex",
-    "get_celex_dataframe",
-    "get_documents",
-    "get_regulations",
-    "prepend_prefixes",
-    "run_query",
     "_add_query_param",
     "get_prefixes",
     "simplify_iri",
