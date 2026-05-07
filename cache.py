@@ -1,5 +1,5 @@
 import threading
-from typing import Any, Optional
+from typing import Any
 
 
 class DocumentCache:
@@ -7,7 +7,7 @@ class DocumentCache:
         self._store: dict[str, Any] = {}
         self._lock = threading.Lock()
 
-    def get(self, celex_id: str) -> Optional[Any]:
+    def get(self, celex_id: str) -> Any:
         with self._lock:
             return self._store.get(celex_id.lower())
 

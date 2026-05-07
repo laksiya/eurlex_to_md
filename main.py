@@ -1,4 +1,9 @@
-import requests as _requests
+import asyncio
+import sys as _sys
+import os as _os
+_sys.path.insert(0, _os.path.join(_os.path.dirname(__file__), "vendor"))
+
+import requests
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -8,11 +13,6 @@ from slowapi.util import get_remote_address
 
 from cache import cache
 from converter import dataframe_to_markdown
-
-import sys as _sys
-import os as _os
-_sys.path.insert(0, _os.path.join(_os.path.dirname(__file__), "vendor"))
-
 from eurlex import get_html_by_celex_id, parse_html
 
 limiter = Limiter(key_func=get_remote_address)
@@ -25,16 +25,18 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET", "O
 @app.get("/generate/{celex_id}")
 @limiter.limit("10/minute")
 async def generate(celex_id: str, request: Request):
+    celex_id = celex_id.upper()
+
     cached = cache.get(celex_id)
     if cached:
         return JSONResponse(content=cached)
 
     try:
-        html = get_html_by_celex_id(celex_id)
-    except (_requests.exceptions.ConnectionError, _requests.exceptions.Timeout) as e:
+        html = await asyncio.to_thread(get_html_by_celex_id, celex_id)
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
         raise HTTPException(status_code=503, detail="CELLAR API unreachable") from e
 
-    if not html or len(html.strip()) < 100:
+    if not html or len(html) < 100:
         raise HTTPException(status_code=404, detail=f"No document found for CELEX ID: {celex_id}")
 
     df = parse_html(html)
@@ -45,7 +47,7 @@ async def generate(celex_id: str, request: Request):
     markdown, title, article_count = dataframe_to_markdown(df)
 
     result = {
-        "celex_id": celex_id.upper(),
+        "celex_id": celex_id,
         "title": title,
         "article_count": article_count,
         "markdown": markdown,
