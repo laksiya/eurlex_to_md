@@ -1,0 +1,25 @@
+# EUR-Lex to Markdown Converter
+
+> Free web tool that converts EU legal documents into clean, structured Markdown.
+> Input a CELEX ID or EUR-Lex URL; get back Markdown ready to read, download, or process with AI.
+
+## Supported documents
+
+- GDPR (32016R0679) — General Data Protection Regulation
+- EU AI Act (32024R1689) — Artificial Intelligence Act
+- Digital Markets Act / DMA (32022R1925)
+- Digital Services Act / DSA (32022R2065)
+- NIS2 Directive (32022L2555)
+- EU Data Act (32023R2854)
+- Cybersecurity Act (32019R0881)
+- DORA (32022R2554) — Digital Operational Resilience Act
+
+## API
+
+GET /generate/{celex_id} — JSON with title, article_count, markdown
+GET /health — cache status
+
+## Source
+
+Fetches from the CELLAR linked-data API (Publications Office of the EU).
+Built on the eurlex library by K.M.J. Jacobs (MIT).
